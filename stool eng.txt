@@ -1,0 +1,169 @@
+#script for making engineering drawing stool
+
+import FreeCAD
+import Part
+#------------------------------------------------------------
+#l,b,h for engineering stool
+L=7
+B=10
+H=1
+#---------------------------------------------------------------
+#creation of seat
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for seat
+FreeCAD.getDocument("Unnamed").getObject("Box").Length = L
+FreeCAD.getDocument("Unnamed").getObject("Box").Width =  B
+FreeCAD.getDocument("Unnamed").getObject("Box").Height = H
+#placement for seat
+App.getDocument("Unnamed").Box.Placement=App.Placement(App.Vector(0,0,9*H),
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#creation of left rear leg
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for left rear leg
+FreeCAD.getDocument("Unnamed").getObject("Box001").Length = 0.1428*L
+FreeCAD.getDocument("Unnamed").getObject("Box001").Width =  0.1*B
+FreeCAD.getDocument("Unnamed").getObject("Box001").Height = 10*H
+#placement for left rear leg
+App.getDocument("Unnamed").Box001.Placement=App.Placement(App.Vector(0.1428*L,0.1*B,-H),
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#union of seat and left rear leg
+App.activeDocument().addObject("Part::MultiFuse","Fusion")
+App.activeDocument().Fusion.Shapes = [App.activeDocument().Box,App.activeDocument().Box001,]
+
+#creation of left front leg
+App.ActiveDocument.recompute()
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for left front leg
+FreeCAD.getDocument("Unnamed").getObject("Box002").Length = 0.1428*L
+FreeCAD.getDocument("Unnamed").getObject("Box002").Width =  0.1*B
+FreeCAD.getDocument("Unnamed").getObject("Box002").Height = 10*H
+#placement for left front leg
+App.getDocument("Unnamed").Box002.Placement=App.Placement(App.Vector(0.714*L,0.1*B,-H), 
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#union of left front leg & fusion
+App.activeDocument().addObject("Part::MultiFuse","Fusion001")
+App.activeDocument().Fusion001.Shapes = [App.activeDocument().Fusion,App.activeDocument().Box002,]
+
+#creation of right rear leg
+App.ActiveDocument.recompute()
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for right rear leg
+FreeCAD.getDocument("Unnamed").getObject("Box003").Length = 0.1428*L
+FreeCAD.getDocument("Unnamed").getObject("Box003").Width =  0.1*B
+FreeCAD.getDocument("Unnamed").getObject("Box003").Height = 10*H
+#placement for right rear leg
+App.getDocument("Unnamed").Box003.Placement=App.Placement(App.Vector(0.1428*L,0.8*B,-H), 
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#union of right rear leg & fusion001
+App.activeDocument().addObject("Part::MultiFuse","Fusion002")
+App.activeDocument().Fusion002.Shapes = [App.activeDocument().Fusion001,App.activeDocument().Box003,]
+
+#creation of right front leg 
+App.ActiveDocument.recompute()
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for right front leg
+FreeCAD.getDocument("Unnamed").getObject("Box004").Length = 0.1428*L
+FreeCAD.getDocument("Unnamed").getObject("Box004").Width =  0.1*B
+FreeCAD.getDocument("Unnamed").getObject("Box004").Height = 10*H
+#placement for right front leg
+App.getDocument("Unnamed").Box004.Placement=App.Placement(App.Vector(0.714*L,0.8*B,-H), 
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#union of right front leg & fusion002
+App.activeDocument().addObject("Part::MultiFuse","Fusion003")
+App.activeDocument().Fusion003.Shapes = [App.activeDocument().Fusion002,App.activeDocument().Box004,]
+
+#creation of left spindle
+App.ActiveDocument.recompute()
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for left spindle
+FreeCAD.getDocument("Unnamed").getObject("Box005").Length = 0.714*L
+FreeCAD.getDocument("Unnamed").getObject("Box005").Width =  0.1*B
+FreeCAD.getDocument("Unnamed").getObject("Box005").Height = H
+#placement for left spindle
+App.getDocument("Unnamed").Box005.Placement=App.Placement(App.Vector(0.1428*L,0.1*B,0), 
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#union of left spindle and fusion003
+App.activeDocument().addObject("Part::MultiFuse","Fusion004")
+App.activeDocument().Fusion004.Shapes = [App.activeDocument().Fusion003,App.activeDocument().Box005,]
+
+#creation of right spindle
+App.ActiveDocument.recompute()
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for right spindle
+FreeCAD.getDocument("Unnamed").getObject("Box006").Length = 0.714*L
+FreeCAD.getDocument("Unnamed").getObject("Box006").Width =  0.1*B
+FreeCAD.getDocument("Unnamed").getObject("Box006").Height = H
+#placement for right spindle
+App.getDocument("Unnamed").Box006.Placement=App.Placement(App.Vector(0.1428*L,0.8*B,0), 
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#union of right spindle & fusion004
+App.activeDocument().addObject("Part::MultiFuse","Fusion005")
+App.activeDocument().Fusion005.Shapes = [App.activeDocument().Fusion004,App.activeDocument().Box006,]
+
+#creation of back spindle
+App.ActiveDocument.recompute()
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for back spindle
+FreeCAD.getDocument("Unnamed").getObject("Box007").Length = 0.1428*L
+FreeCAD.getDocument("Unnamed").getObject("Box007").Width =  0.7*B
+FreeCAD.getDocument("Unnamed").getObject("Box007").Height = H
+#placement for back spindle
+App.getDocument("Unnamed").Box007.Placement=App.Placement(App.Vector(0.1428*L,0.2*B,0), 
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#union of back spindle & fusion005
+App.activeDocument().addObject("Part::MultiFuse","Fusion006")
+App.activeDocument().Fusion006.Shapes = [App.activeDocument().Fusion005,App.activeDocument().Box007,]
+
+#creation of front spindle
+App.ActiveDocument.recompute()
+App.ActiveDocument.addObject("Part::Box","Box")
+App.ActiveDocument.ActiveObject.Label = "Cube"
+App.ActiveDocument.recompute()
+#providing l,b,h for front spindle
+FreeCAD.getDocument("Unnamed").getObject("Box008").Length = 0.1428*L
+FreeCAD.getDocument("Unnamed").getObject("Box008").Width =  0.8*B
+FreeCAD.getDocument("Unnamed").getObject("Box008").Height = H
+#placement for front spindle
+App.getDocument("Unnamed").Box008.Placement=App.Placement(App.Vector(0.714*L,0.1*B,0), 
+App.Rotation(App.Vector(0,0,1),0), 
+App.Vector(0,0,0))
+
+#union of front spindle and fusion006
+App.activeDocument().addObject("Part::MultiFuse","Fusion007")
+App.activeDocument().Fusion007.Shapes = [App.activeDocument().Fusion006,App.activeDocument().Box008,]
+
+App.ActiveDocument.recompute()
+
+#Macro ends here...
